@@ -15,8 +15,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     //       (힌트: boolean existsByNameAndIdNot(String name, Long id))
     boolean existsByNameAndIdNot(String name, Long id);
 
-//    // TODO(배치): 품절(stock=0) 상품 건수 조회용 쿼리메서드를 선언하라.
-//    //       (힌트: long countByStock(int stock))
-//    long countByStock(int stock);
+    // TODO(배치): 품절(stock=0) 상품 건수 조회용 쿼리메서드를 선언하라.
+    //       (힌트: long countByStock(int stock))
+    long countByStock(int stock);
 
 }
