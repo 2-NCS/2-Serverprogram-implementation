@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -62,7 +63,33 @@ public class ProductRestController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> add(@RequestBody @Valid ProductDTO dto,
                                                     BindingResult bindingResult) {
-        throw new UnsupportedOperationException("TODO: add 구현");
+
+        Map<String,Object> responseMap = new HashMap<>();
+
+        // 유효성 검증
+        if(bindingResult.hasErrors()){
+            for(FieldError error : bindingResult.getFieldErrors()){
+                responseMap.put(
+                        error.getField(),
+                        error.getDefaultMessage()
+                );
+            }
+
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(responseMap);
+        }
+
+        // 서비스 실행
+        productService.register(dto);
+
+        // 성공 응답
+        responseMap.put("message", "상품 등록 성공!");
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(responseMap);
+
     }
 
     // TODO: 수정
