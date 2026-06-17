@@ -5,12 +5,15 @@ import com.example.demo.Domain.Common.Service.ProductService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +32,17 @@ public class ProductRestController {
     //    ResponseEntity 로 200(OK) 반환
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> list(Pageable pageable) {
-        throw new UnsupportedOperationException("TODO: list 구현");
+
+        Page<ProductDTO> page = productService.list(pageable);
+
+        Map<String, Object> responseMap = new HashMap<>();
+
+        responseMap.put("content", page.getContent());
+        responseMap.put("number", page.getNumber());
+        responseMap.put("totalPages", page.getTotalPages());
+        responseMap.put("totalElements", page.getTotalElements());
+
+        return ResponseEntity.status(HttpStatus.OK).body(responseMap);
     }
 
     // TODO: 단건 조회
