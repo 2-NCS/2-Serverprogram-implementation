@@ -55,6 +55,6 @@ public class ProductBatch {
      *   scheduleSoldOutCheck()(자동) → checkSoldOut()(여기) → countByStock(0) → 품절 건수 반환 → 로그 출력
      */
     public int checkSoldOut() {
-        throw new UnsupportedOperationException("TODO: checkSoldOut 구현");
+        return (int)productRepository.countByStock(0);
     }
 }
