@@ -45,15 +45,15 @@ public class ProductDTO {
 
     // TODO: Entity → DTO 변환(static) 메서드를 구현하라.
     //  - ProductDTO.builder() 로 Product 의 각 필드를 매핑하여 ProductDTO 객체를 반환한다.
-//    public static ProductDTO from(Product p) {
-////        throw new UnsupportedOperationException("TODO: from 구현");
-//        return ProductDTO.builder()
-//                .id(p.getId())
-//                .name(p.getName())
-//                .price(p.getPrice())
-//                .stock(p.getStock())
-//                .category(p.getCategory())
-//                .createAt(p.getCreateAt())
-//                .build();
-//    }
+    public static ProductDTO from(Product p) {
+//        throw new UnsupportedOperationException("TODO: from 구현");
+        return ProductDTO.builder()
+                .id(p.getId())
+                .name(p.getName())
+                .price(p.getPrice())
+                .stock(p.getStock())
+                .category(p.getCategory())
+                .createAt(p.getCreateAt())
+                .build();
+    }
 }
