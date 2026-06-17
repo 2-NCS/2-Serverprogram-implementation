@@ -61,8 +61,10 @@ public class ProductServiceImpl implements ProductService {
     //  - productRepository.existsById(id) 확인 (없으면 MyBizException)
     //  - productRepository.deleteById(id)
     @Override
+    @Transactional
     public void remove(Long id) {
-        throw new UnsupportedOperationException("TODO: remove 구현");
+        if(!productRepository.existsById(id)) throw new MyBizException("존재하지 않는 상품id입니다.");
+        productRepository.deleteById(id);
     }
 
     // TODO: 단건 조회
