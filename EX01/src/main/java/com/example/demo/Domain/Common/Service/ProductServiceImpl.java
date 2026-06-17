@@ -71,8 +71,11 @@ public class ProductServiceImpl implements ProductService {
     //  - @Transactional(readOnly = true) 적용
     //  - productRepository.findById(id) (없으면 MyBizException) → ProductDTO.from 으로 반환
     @Override
+    @Transactional(readOnly = true)
     public ProductDTO get(Long id) {
-        throw new UnsupportedOperationException("TODO: get 구현");
+        Optional<Product> p = productRepository.findById(id);
+        if(p.isEmpty()) throw new MyBizException("존재하지 않는 상품id입니다.");
+        return ProductDTO.from(p.get());
     }
 
     // TODO: 목록 조회(페이징)
