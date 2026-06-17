@@ -82,8 +82,9 @@ public class ProductServiceImpl implements ProductService {
     //  - @Transactional(readOnly = true) 적용
     //  - productRepository.findAll(pageable) 결과를 .map(ProductDTO::from) 으로 변환하여 반환
     @Override
+    @Transactional(readOnly = true)
     public Page<ProductDTO> list(Pageable pageable) {
-        throw new UnsupportedOperationException("TODO: list 구현");
+        return productRepository.findAll(pageable).map(ProductDTO::from);
     }
 
     // TODO: 일괄 등록 (한 트랜잭션)
