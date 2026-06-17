@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -41,6 +42,28 @@ class ProductServiceTest {
     //  - 전체 count 가 (등록 1건) 그대로인지(=bulk 0건 저장) 확인
     @Test
     void registerBulk_중간실패_전체롤백() {
-        fail("TODO: registerBulk 롤백 테스트 구현");
+        productService.register(ProductDTO.builder()
+                .name("A")
+                .price(1000)
+                .stock(10)
+                .category("AA")
+                .build());
+        List<ProductDTO> list = new ArrayList<>();
+        list.add(ProductDTO.builder()
+                .name("B")
+                .price(1000)
+                .stock(10)
+                .category("BB")
+                .build());
+        list.add(ProductDTO.builder()
+                .name("A")
+                .price(1000)
+                .stock(10)
+                .category("AA")
+                .build());
+        assertThrows(MyBizException.class,()->{System.out.println("등록 수"+ productService.registerBulk(list));});
+
+
+        fail("registerBulk 롤백 테스트 실패 / 정상작동");
     }
 }
