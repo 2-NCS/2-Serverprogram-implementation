@@ -24,7 +24,14 @@ class ProductServiceTest {
     //  - ProductDTO 빌더로 유효한 상품 생성 → register → id 가 생성되었는지 assertNotNull
     @Test
     void register_정상() {
-        fail("TODO: register_정상 테스트 구현");
+        ProductDTO dto = productService.register(ProductDTO.builder()
+                .name("A")
+                .price(1000)
+                .stock(10)
+                .category("AA")
+                .build());
+        assertNotNull(dto.getId());
+        fail("register_정상 테스트 성공");
     }
 
     // TODO: 일괄등록 중간 실패 시 전체 롤백 테스트
