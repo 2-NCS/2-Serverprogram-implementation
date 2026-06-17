@@ -27,8 +27,11 @@ public class ProductServiceImpl implements ProductService {
     //  - dto.setCreateAt(LocalDateTime.now()) 설정 후 productRepository.save(dto.toEntity())
     //  - 저장된 Entity 를 ProductDTO.from(...) 으로 변환하여 반환
     @Override
+    @Transactional
     public ProductDTO register(ProductDTO dto) {
-        throw new UnsupportedOperationException("TODO: register 구현");
+        if(productRepository.existsByName(dto.getName())) throw new MyBizException("중복된 상품 이름입니다.");
+        dto.setCreateAt(LocalDateTime.now());
+        return ProductDTO.from(productRepository.save(dto.toEntity()));
     }
 
     // TODO: 상품 수정
