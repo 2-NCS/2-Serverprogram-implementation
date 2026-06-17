@@ -34,6 +34,7 @@ public class ProductBatch {
      *             [Batch] 품절 점검 완료 - 품절 상품 수=N
      */
     @Scheduled(fixedDelayString = "${batch.soldout.delay:60000}")
+    @Transactional(readOnly = true)
     public void scheduleSoldOutCheck() {
         int count = checkSoldOut();
         log.info("[Batch] 품절 점검 완료 - 품절 상품 수=" + count);
@@ -54,6 +55,6 @@ public class ProductBatch {
      *   scheduleSoldOutCheck()(자동) → checkSoldOut()(여기) → countByStock(0) → 품절 건수 반환 → 로그 출력
      */
     public int checkSoldOut() {
-        throw new UnsupportedOperationException("TODO: checkSoldOut 구현");
+        return (int)productRepository.countByStock(0);
     }
 }
