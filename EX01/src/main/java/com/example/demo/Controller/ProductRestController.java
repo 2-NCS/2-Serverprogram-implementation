@@ -99,7 +99,25 @@ public class ProductRestController {
     public ResponseEntity<Map<String, Object>> update(@PathVariable("id") Long id,
                                                        @RequestBody @Valid ProductDTO dto,
                                                        BindingResult bindingResult) {
-        throw new UnsupportedOperationException("TODO: update 구현");
+
+        Map<String, Object> responseMap = new HashMap<>();
+
+        // 유효성 검증
+        if (bindingResult.hasErrors()) {
+            for (FieldError error : bindingResult.getFieldErrors()) {
+                responseMap.put(error.getField(), error.getDefaultMessage());
+            }
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseMap);
+        }
+
+        // 수정
+        productService.modify(id, dto);
+
+        // 성공 응답
+        responseMap.put("message", "상품 수정 성공!");
+
+        return ResponseEntity.status(HttpStatus.OK).body(responseMap);
     }
 
     // TODO: 삭제
