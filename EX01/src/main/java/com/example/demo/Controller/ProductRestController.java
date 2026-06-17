@@ -138,6 +138,13 @@ public class ProductRestController {
     //  - productService.registerBulk(list) 호출 후 등록 건수(count) + "일괄 등록 성공!" 반환
     @PostMapping(value = "/bulk", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> addBulk(@RequestBody List<ProductDTO> list) {
-        throw new UnsupportedOperationException("TODO: addBulk 구현");
+        Map<String, Object> responseMap = new HashMap<>();
+
+        int count = productService.registerBulk(list);
+
+        responseMap.put("count", count);
+        responseMap.put("message", "일괄 등록 성공!");
+
+        return ResponseEntity.status(HttpStatus.OK).body(responseMap);
     }
 }
