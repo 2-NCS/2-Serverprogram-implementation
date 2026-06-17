@@ -92,7 +92,19 @@ public class ProductServiceImpl implements ProductService {
     //  - list 를 순회하며 저장, 하나라도 existsByName 중복이면 MyBizException 발생 → 전체 롤백
     //  - 저장한 건수(int)를 반환
     @Override
+    @Transactional
     public int registerBulk(List<ProductDTO> list) {
-        throw new UnsupportedOperationException("TODO: registerBulk 구현");
+        int count=0;
+        try{
+            for(ProductDTO dto : list) {
+                if (productRepository.existsByName(dto.getName())) throw new MyBizException("동일한 상품이름이 존재합니다.");
+                dto.setCreateAt(LocalDateTime.now());
+                productRepository.save(dto.toEntity());
+                count++;
+            }
+            return count;
+        }catch (MyBizException e){
+            return 0;
+        }
     }
 }
