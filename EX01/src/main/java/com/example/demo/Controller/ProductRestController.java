@@ -124,7 +124,13 @@ public class ProductRestController {
     //  - productService.remove(id) 호출 후 200 + "상품 삭제 성공!" 메시지 반환
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, Object>> delete(@PathVariable("id") Long id) {
-        throw new UnsupportedOperationException("TODO: delete 구현");
+        Map<String, Object> responseMap = new HashMap<>();
+
+        productService.remove(id);
+
+        responseMap.put("message", "상품 삭제 성공!");
+
+        return ResponseEntity.status(HttpStatus.OK).body(responseMap);
     }
 
     // TODO: 일괄 등록 (한 트랜잭션, 중간 실패 시 전체 롤백)
