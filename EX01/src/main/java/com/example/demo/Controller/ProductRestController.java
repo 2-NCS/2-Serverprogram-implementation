@@ -49,7 +49,10 @@ public class ProductRestController {
     //  - productService.get(id) 결과를 200(OK) 으로 반환
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProductDTO> get(@PathVariable("id") Long id) {
-        throw new UnsupportedOperationException("TODO: get 구현");
+
+        ProductDTO dto = productService.get(id);
+
+        return ResponseEntity.status(HttpStatus.OK).body(dto);
     }
 
     // TODO: 등록
