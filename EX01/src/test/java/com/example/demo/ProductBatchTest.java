@@ -18,6 +18,7 @@ class ProductBatchTest {
     //  - 반환된 품절 건수가 0 이상인지 검증(assertTrue(count >= 0))
     @Test
     void checkSoldOut_동작() {
-        fail("TODO: checkSoldOut 배치 테스트 구현");
+        int count = productBatch.checkSoldOut();
+        assertTrue(count >= 0);;
     }
 }
