@@ -34,6 +34,7 @@ public class ProductBatch {
      *             [Batch] 품절 점검 완료 - 품절 상품 수=N
      */
     @Scheduled(fixedDelayString = "${batch.soldout.delay:60000}")
+    @Transactional(readOnly = true)
     public void scheduleSoldOutCheck() {
         int count = checkSoldOut();
         log.info("[Batch] 품절 점검 완료 - 품절 상품 수=" + count);
