@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -41,8 +42,18 @@ public class ProductServiceImpl implements ProductService {
     //  - 조회한 Entity 의 필드를 dto 값으로 변경 → JPA 변경감지(dirty checking)로 update
     //  - 변경된 Entity 를 ProductDTO.from 으로 반환
     @Override
+    @Transactional
     public ProductDTO modify(Long id, ProductDTO dto) {
-        throw new UnsupportedOperationException("TODO: modify 구현");
+        Optional<Product> p = productRepository.findById(id);
+        if(p.isEmpty()) throw new MyBizException("존재하지 않는 상품id입니다.");
+        if(productRepository.existsByNameAndIdNot(dto.getName(),id)) throw new MyBizException("동일한 상품이 존재합니다.");
+        p.get().setName(dto.getName());
+        p.get().setCategory(dto.getCategory());
+        p.get().setStock(dto.getStock());
+        p.get().setPrice(dto.getPrice());
+        p.get().setCreateAt(LocalDateTime.now());
+
+        return ProductDTO.from(p.get());
     }
 
     // TODO: 상품 삭제
