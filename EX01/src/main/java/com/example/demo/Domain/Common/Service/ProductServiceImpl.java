@@ -104,7 +104,7 @@ public class ProductServiceImpl implements ProductService {
             }
             return count;
         }catch (MyBizException e){
-            return 0;
+            throw e;
         }
     }
 }
