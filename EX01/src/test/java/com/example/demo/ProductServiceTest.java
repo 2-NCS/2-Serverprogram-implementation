@@ -15,7 +15,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@Transactional   // 테스트 후 자동 롤백
+//@Transactional   // 테스트 후 자동 롤백
 class ProductServiceTest {
 
     @Autowired private ProductService productService;
@@ -32,7 +32,6 @@ class ProductServiceTest {
                 .category("AA")
                 .build());
         assertNotNull(dto.getId());
-        fail("register_정상 테스트 성공");
     }
 
     // TODO: 일괄등록 중간 실패 시 전체 롤백 테스트
@@ -62,8 +61,6 @@ class ProductServiceTest {
                 .category("AA")
                 .build());
         assertThrows(MyBizException.class,()->{System.out.println("등록 수"+ productService.registerBulk(list));});
-
-
-        fail("registerBulk 롤백 테스트 실패 / 정상작동");
+        assertEquals(3,productRepository.count());
     }
 }
