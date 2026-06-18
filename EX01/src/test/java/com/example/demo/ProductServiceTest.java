@@ -32,7 +32,6 @@ class ProductServiceTest {
                 .category("AA")
                 .build());
         assertNotNull(dto.getId());
-        fail("register_정상 테스트 성공");
     }
 
     // TODO: 일괄등록 중간 실패 시 전체 롤백 테스트
@@ -62,8 +61,6 @@ class ProductServiceTest {
                 .category("AA")
                 .build());
         assertThrows(MyBizException.class,()->{System.out.println("등록 수"+ productService.registerBulk(list));});
-
-
-        fail("registerBulk 롤백 테스트 실패 / 정상작동");
+        assertEquals(1L, productRepository.count());
     }
 }

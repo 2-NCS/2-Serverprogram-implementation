@@ -95,16 +95,13 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public int registerBulk(List<ProductDTO> list) {
         int count=0;
-        try{
-            for(ProductDTO dto : list) {
-                if (productRepository.existsByName(dto.getName())) throw new MyBizException("동일한 상품이름이 존재합니다.");
-                dto.setCreateAt(LocalDateTime.now());
-                productRepository.save(dto.toEntity());
-                count++;
-            }
-            return count;
-        }catch (MyBizException e){
-            return 0;
+
+        for(ProductDTO dto : list) {
+            if (productRepository.existsByName(dto.getName())) throw new MyBizException("동일한 상품이름이 존재합니다.");
+            dto.setCreateAt(LocalDateTime.now());
+            productRepository.save(dto.toEntity());
+            count++;
         }
+        return count;
     }
 }
